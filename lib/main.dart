@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,6 +59,12 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(icon: SvgPicture.asset(
+            'assets/icons/ic_menu_s24.svg',
+            color: Colors.black,
+          ), onPressed: () {})
+        ],
       ),
       body: Center(
         // Center is a layout widget. It takes a single child and positions it
