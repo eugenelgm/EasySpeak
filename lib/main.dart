@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_tts/flutter_tts.dart';
+import 'dart:developer';
 
 void main() {
   runApp(const MyApp());
@@ -43,6 +45,15 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   late List<bool> _selected;
   final int listLength = 30;
+  
+  final FlutterTts tts = FlutterTts();
+  final TextEditingController controller = TextEditingController(text: 'Hello world');
+
+  _MyHomePageState() {
+    log("test");
+    tts.setLanguage('en');
+    tts.setSpeechRate(0.4);
+  }
 
   @override
   void initState() {
@@ -53,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      /*appBar: AppBar(
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(icon: SvgPicture.asset(
@@ -61,14 +72,47 @@ class _MyHomePageState extends State<MyHomePage> {
             color: Colors.black,
           ), onPressed: () {})
         ],
-      ),
-      body: ListBuilder(
-        isSelectionMode: false,
-        selectedList: _selected,
-        onSelectionChange: (bool x) {},
+      ),*/
+      body: DefaultTabController(
+        length: 2,
+        child: NestedScrollView(
+          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                expandedHeight: 200.0,
+                floating: false,
+                pinned: true,
+                flexibleSpace: FlexibleSpaceBar(
+                  collapseMode: CollapseMode.none,
+                  title: const Text("Studying\n69 Sentences",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16.0,
+                    )
+                  ),
+                ),
+                /*bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(100.0),
+                  child: Column(
+                    children: const <Widget>[
+                      Text("Test")
+                    ]
+                  ),
+                ),*/
+              ),
+            ];
+          },
+          body: ListBuilder(
+            isSelectionMode: false,
+            selectedList: _selected,
+            onSelectionChange: (bool x) {},
+          )
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
+        onPressed: (){
+          tts.speak('Hello, World!');
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
