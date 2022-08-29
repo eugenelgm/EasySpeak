@@ -1,3 +1,4 @@
+import 'package:easy_speak_flutter/src/SentenceAdd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -111,7 +112,11 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          tts.speak('Hello, World!');
+          //tts.speak('Hello, World!');
+          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SentenceAdd())
+          );
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
